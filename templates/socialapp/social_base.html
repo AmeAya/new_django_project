@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social App</title>
+</head>
+<body style="font-family: sans-serif">
+    <form action="{% url this_url %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="eng" name="language">
+        <input type="submit" value="English">
+    </form>
+
+    <form action="{% url this_url %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="rus" name="language">
+        <input type="submit" value="Russian">
+    </form>
+
+    {% if request.session.language == 'eng' %}
+        <h1>Welcome!</h1>
+    {% elif request.session.language == 'rus' %}
+        <h1>Добро пожаловать!</h1>
+    {% endif %}
+
+    <div id="content" class="content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>
