@@ -41,3 +41,8 @@ def testView(request):
         'this_url': 'test_url',
     }
     return render(request, 'socialapp/test.html', context)
+
+
+def view404(request, exception):
+    return render(request, 'page_404.html', status=404)
+

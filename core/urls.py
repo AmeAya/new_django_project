@@ -22,3 +22,5 @@ urlpatterns = [
     path('store/', include('storeapp.urls')),
     path('social/', include('socialapp.urls')),
 ]
+
+handler404 = 'socialapp.views.view404'
