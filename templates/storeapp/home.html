@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 align="center" id="header_id">Connecting...</h1>
+    <label for="message_input_id">Input Message:</label>
+    <input type="text" id="message_input_id">
+    <button type="submit" id="message_button_id">Send Button</button>
+    <div id="chat_id" style="border: 1px solid black; broder-radius: 5px;">
+
+    </div>
+    <script>
+        const chatSocket = new WebSocket("ws://" + window.location.host + "/");
+        chatSocket.onopen = function() {
+            document.getElementById('header_id').innerHTML = 'Connected!';
+        };
+
+        var button = document.getElementById('message_button_id');
+        button.onclick = function() {
+            var text = document.getElementById('message_input_id').value;
+            chatSocket.send(JSON.stringify({'message': text, 'username': '{{ user.username }}' }));
+        }
+
+        chatSocket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            var div = document.getElementById('chat_id');
+            var p = document.createElement('p');
+            p.innerHTML = data.username + ': ' + data.message;
+            div.appendChild(p);
+            document.getElementById('message_input_id').value = '';
+        };
+    </script>
+</body>
+</html>
